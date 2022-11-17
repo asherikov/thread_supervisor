@@ -134,7 +134,7 @@ namespace tut
             Restart restart_;
             Scheduling scheduling_;
 
-#ifdef THREAD_SANITIZER_THOU_SHALT_NOT_PASS  // do not allow threads to exit / crash quietly
+#ifdef THREAD_SUPERVISOR_THOU_SHALT_NOT_PASS  // do not allow threads to exit / crash quietly
             TerminationPolicy termination_policy_ = TerminationPolicy::KILLALL;
             ExceptionPolicy exception_policy_ = ExceptionPolicy::PASS;
 #else
