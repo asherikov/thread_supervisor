@@ -4,11 +4,14 @@ jobs:
     focal_test:
         runs-on: ubuntu-20.04
 
-        env:
-            ROS_DISTRO: noetic
-            ROS_HOSTNAME: localhost
-            ROS_CI_DESKTOP: focal
-            PYTHONPATH: $PYTHONPATH:/usr/lib/python2.7/dist-packages:/usr/local/lib/python2.7/dist-packages
+        # Install system dependencies, namely a very barebones ROS setup.
+        steps:
+            - uses: actions/checkout@v3
+            - run: make install_ubuntu_test_deps
+            - run: make test
+
+    jammy_test:
+        runs-on: ubuntu-22.04
 
         # Install system dependencies, namely a very barebones ROS setup.
         steps:
