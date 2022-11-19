@@ -1,0 +1,10 @@
+-s dir
+--name thread_supervisor
+--license "Apache 2.0"
+--architecture all
+--description "Simple C++11 thread supervisor which automatically restarts failed or finished threads."
+--url "https://asherikov.github.io/thread_supervisor/doxygen"
+--maintainer "Alexander Sherikov <asherikov@yandex.com>"
+--chdir build/install
+
+usr
