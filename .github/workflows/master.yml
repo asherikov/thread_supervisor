@@ -1,10 +1,13 @@
 on: [push, pull_request]
 
+env:
+    APT_INSTALL: sudo apt install -y --no-install-recommends
+
+
 jobs:
     focal_test:
         runs-on: ubuntu-20.04
 
-        # Install system dependencies, namely a very barebones ROS setup.
         steps:
             - uses: actions/checkout@v3
             - run: make install_ubuntu_test_deps
@@ -13,8 +16,29 @@ jobs:
     jammy_test:
         runs-on: ubuntu-22.04
 
-        # Install system dependencies, namely a very barebones ROS setup.
         steps:
             - uses: actions/checkout@v3
             - run: make install_ubuntu_test_deps
             - run: make test
+
+    jammy_scanbuild:
+        runs-on: ubuntu-22.04
+
+        steps:
+            - uses: actions/checkout@v3
+            - run: sudo apt update
+            - run: make install_ubuntu_test_deps
+            - run: $APT_INSTALL clang-tidy-13
+            - run: make clangcheck SCANBUILD=scan-build-13
+
+    deb:
+        runs-on: ubuntu-20.04
+        defaults:
+            run:
+                shell: bash
+        steps:
+            - uses: actions/checkout@v3
+            - run: make deb_install_deps
+            - run: make deb
+            - run: sudo dpkg -i build/thread_supervisor-*-any.deb
+
