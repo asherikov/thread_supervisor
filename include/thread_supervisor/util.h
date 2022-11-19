@@ -8,11 +8,10 @@
 
 #pragma once
 
-
-#define THREAD_SANITIZER_DISABLE_CLASS_COPY(Class)                                                                     \
+/// Class definitions that prevent copying
+#define THREAD_SUPERVISOR_DISABLE_CLASS_COPY(Class)                                                                    \
 public:                                                                                                                \
     Class(const Class &) = delete;                                                                                     \
     Class &operator=(const Class &) = delete;                                                                          \
     Class(Class &&) = delete;                                                                                          \
     Class &operator=(Class &&) = delete;
-

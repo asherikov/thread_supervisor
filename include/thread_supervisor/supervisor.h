@@ -26,11 +26,15 @@ namespace tut
 {
     namespace log
     {
+        /**
+         * Simple stderr logger, can be overridden by corresponding template
+         * parameter.
+         */
         class StdErr
         {
         public:
             template <class t_Arg, class... t_Args>
-            void log(const t_Arg &arg, t_Args &&... args) const
+            void log(const t_Arg &arg, t_Args &&...args) const
             {
                 std::cerr << arg;
                 log(std::forward<t_Args>(args)...);
@@ -46,27 +50,31 @@ namespace tut
 
     namespace thread
     {
+        /// Thread parameters
         class Parameters
         {
         public:
+            /// What to do when thread terminated
             enum class TerminationPolicy
             {
-                IGNORE,
-                KILLALL
+                IGNORE,  /// ignore and proceed
+                KILLALL  /// kill all other threads
             };
 
+            /// Exception handling policy
             enum class ExceptionPolicy
             {
-                CATCH,
-                PASS  // application is going to crash
+                CATCH,  /// Catch & report
+                PASS    /// application is going to crash
             };
 
 
+            /// Restarting parameters
             class Restart
             {
             public:
-                std::size_t attempts_;  // 0 = unlimited
-                std::size_t sleep_ms_;
+                std::size_t attempts_;  /// 0 = unlimited
+                std::size_t sleep_ms_;  /// delay between attempts
 
             public:
                 explicit Restart(const std::size_t attempts = 0, const std::size_t sleep_ms = 0)
@@ -97,15 +105,19 @@ namespace tut
             };
 
 
+            /// Scheduling parameters, POSIX threads only, see pthread_setschedparam
             class Scheduling
             {
             public:
-                int priority_;
-                int policy_;
-                bool ignore_failures_;
+                int priority_;          /// thread priority
+                int policy_;            /// thread policy
+                bool ignore_failures_;  /// proceed if scheduling parameters could not be set
 
             public:
-                explicit Scheduling(const int priority = 0, const int policy = SCHED_FIFO, const bool ignore_failures = true)
+                explicit Scheduling(
+                        const int priority = 0,
+                        const int policy = SCHED_FIFO,
+                        const bool ignore_failures = true)
                 {
                     priority_ = priority;
                     policy_ = policy;
@@ -134,7 +146,7 @@ namespace tut
             Restart restart_;
             Scheduling scheduling_;
 
-#ifdef THREAD_SUPERVISOR_THOU_SHALT_NOT_PASS  // do not allow threads to exit / crash quietly
+#ifdef THREAD_SUPERVISOR_THOU_SHALT_NOT_PASS  /// do not allow threads to exit / crash quietly
             TerminationPolicy termination_policy_ = TerminationPolicy::KILLALL;
             ExceptionPolicy exception_policy_ = ExceptionPolicy::PASS;
 #else
@@ -145,26 +157,26 @@ namespace tut
 
         public:
             template <class... t_Args>
-            Parameters(const Restart &&restart, t_Args &&... args) : Parameters(std::forward<t_Args>(args)...)
+            Parameters(const Restart &&restart, t_Args &&...args) : Parameters(std::forward<t_Args>(args)...)
             {
                 restart_ = restart;
             }
 
             template <class... t_Args>
-            Parameters(const Scheduling &&scheduling, t_Args &&... args) : Parameters(std::forward<t_Args>(args)...)
+            Parameters(const Scheduling &&scheduling, t_Args &&...args) : Parameters(std::forward<t_Args>(args)...)
             {
                 scheduling_ = scheduling;
             }
 
             template <class... t_Args>
-            Parameters(const TerminationPolicy termination_policy, t_Args &&... args)
+            Parameters(const TerminationPolicy termination_policy, t_Args &&...args)
               : Parameters(std::forward<t_Args>(args)...)
             {
                 termination_policy_ = termination_policy;
             }
 
             template <class... t_Args>
-            Parameters(const ExceptionPolicy exception_policy, t_Args &&... args)
+            Parameters(const ExceptionPolicy exception_policy, t_Args &&...args)
               : Parameters(std::forward<t_Args>(args)...)
             {
                 exception_policy_ = exception_policy;
@@ -181,9 +193,10 @@ namespace tut
         class Supervisor;
 
 
+        /// Thread handling class
         class Thread
         {
-            // THREAD_SANITIZER_DISABLE_CLASS_COPY(Thread)
+            // THREAD_SUPERVISOR_DISABLE_CLASS_COPY(Thread)
 
         public:
             using List = std::list<Thread>;
@@ -197,7 +210,7 @@ namespace tut
 
         protected:
             template <class t_Logger, class t_Function, class... t_Args>
-            void startOnce(Supervisor<t_Logger> *supervisor, t_Function &&function, t_Args &&... args)
+            void startOnce(Supervisor<t_Logger> *supervisor, t_Function &&function, t_Args &&...args)
             {
                 switch (parameters_.exception_policy_)
                 {
@@ -224,10 +237,11 @@ namespace tut
 
 
             template <class t_Logger, class t_Function, class... t_Args>
-            void startLoop(Supervisor<t_Logger> *supervisor, t_Function &&function, t_Args &&... args)
+            void startLoop(Supervisor<t_Logger> *supervisor, t_Function &&function, t_Args &&...args)
             {
                 bool started = false;
-                for (std::size_t attempt = 0; parameters_.restart_.isOk(attempt) and not supervisor->isInterrupted(); ++attempt)
+                for (std::size_t attempt = 0; parameters_.restart_.isOk(attempt) and not supervisor->isInterrupted();
+                     ++attempt)
                 {
                     if (started)
                     {
@@ -238,10 +252,11 @@ namespace tut
                         }
                         else
                         {
-                            supervisor->log("Supervisor / restarting thread: ",
-                                            attempt + 1,
-                                            " / ",
-                                            parameters_.restart_.isUnlimited() ? 0 : parameters_.restart_.attempts_);
+                            supervisor->log(
+                                    "Supervisor / restarting thread: ",
+                                    attempt + 1,
+                                    " / ",
+                                    parameters_.restart_.isUnlimited() ? 0 : parameters_.restart_.attempts_);
                         }
                     }
                     else
@@ -255,7 +270,7 @@ namespace tut
 
 
             template <class t_Logger, class t_Function, class... t_Args>
-            void startThread(Supervisor<t_Logger> *supervisor, t_Function &&function, t_Args &&... args)
+            void startThread(Supervisor<t_Logger> *supervisor, t_Function &&function, t_Args &&...args)
             {
                 if (not parameters_.scheduling_.apply(thread_.native_handle()))
                 {
@@ -296,11 +311,16 @@ namespace tut
 
         public:
             template <class t_Logger, class... t_Args>
-            void start(Supervisor<t_Logger> *supervisor, Reference self, const Parameters &&parameters, t_Args &&... args)
+            void start(
+                    Supervisor<t_Logger> *supervisor,
+                    Reference self,
+                    const Parameters &&parameters,
+                    t_Args &&...args)
             {
                 self_ = self;
                 parameters_ = parameters;
-                thread_ = std::thread(&Thread::startThread<t_Logger, t_Args...>, this, supervisor, std::forward<t_Args>(args)...);
+                thread_ = std::thread(
+                        &Thread::startThread<t_Logger, t_Args...>, this, supervisor, std::forward<t_Args>(args)...);
             }
 
             void join()
@@ -314,11 +334,12 @@ namespace tut
 
 
 
+        /// Thread supervisor
         template <class t_Logger>
         class Supervisor : public t_Logger
         {
             friend class Thread;
-            THREAD_SANITIZER_DISABLE_CLASS_COPY(Supervisor)
+            THREAD_SUPERVISOR_DISABLE_CLASS_COPY(Supervisor)
 
 
         protected:
@@ -419,18 +440,21 @@ namespace tut
             }
 
 
+            /// Interrupt execution, see @ref isInterrupted
             void interrupt()
             {
                 interrupted_ = true;
             }
 
 
+            /// Check if interrupted, child threads should stop when true (pass supervisor as a parameter).
             bool isInterrupted() const
             {
                 return (interrupted_);
             }
 
 
+            /// Interrupt and wait for children to stop
             bool stop(const std::size_t wait_ms = 10000)
             {
                 interrupt();
@@ -438,8 +462,9 @@ namespace tut
             }
 
 
+            /// Add a thread: (<thread parameters>, <function pointer>, <function parameters>)
             template <class... t_Args>
-            void add(t_Args &&... args)
+            void add(t_Args &&...args)
             {
                 if (isInterrupted())
                 {
@@ -457,6 +482,7 @@ namespace tut
 
 
 
+        /// Inheritable supervisor simplifies starting class methods in separate threads
         template <class t_Logger = log::StdErr>
         class InheritableSupervisor
         {
@@ -476,7 +502,8 @@ namespace tut
             }
 
 
-            // should call stop(), pure virtual to remind that threads must be destructed properly at the right time.
+            /// should call stop(), pure virtual to remind that threads must be
+            /// destructed properly at the right time, e.g., from a destructor
             virtual void stopSupervisedThreads() = 0;
             /*
             {
@@ -485,16 +512,18 @@ namespace tut
             */
 
 
+            /// Add a thread: (<thread parameters>, <function pointer>, <this>, <function parameters>)
             template <class... t_Args>
-            void addSupervisedThread(t_Args &&... args)
+            void addSupervisedThread(t_Args &&...args)
             {
                 getThreadSupervisor().add(std::forward<t_Args>(args)...);
             }
 
 
+            /// Should be checked by threaded class methods
             bool isThreadSupervisorInterrupted() const
             {
-                return(getThreadSupervisor().isInterrupted());
+                return (getThreadSupervisor().isInterrupted());
             }
         };
     }  // namespace thread

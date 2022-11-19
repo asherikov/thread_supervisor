@@ -94,14 +94,15 @@ BOOST_AUTO_TEST_CASE(ThreadSupervisorCount)
     TestThreadSupervisor pool;
     BOOST_CHECK_EQUAL(pool.counter_, static_cast<std::size_t>(0));
 
-    pool.addSupervisedThread(tut::thread::Parameters(tut::thread::Parameters::Restart(/*attempts=*/10, /*sleep_ms=*/5),
-                                                     tut::thread::Parameters::TerminationPolicy::IGNORE),
-                             &TestThreadSupervisor::threadCounter,
-                             &pool);
+    pool.addSupervisedThread(
+            tut::thread::Parameters(
+                    tut::thread::Parameters::Restart(/*attempts=*/10, /*sleep_ms=*/5),
+                    tut::thread::Parameters::TerminationPolicy::IGNORE),
+            &TestThreadSupervisor::threadCounter,
+            &pool);
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     BOOST_CHECK_EQUAL(pool.counter_, static_cast<std::size_t>(10));
     BOOST_CHECK(not pool.isThreadSupervisorInterrupted());
 }
-
