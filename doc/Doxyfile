@@ -830,6 +830,7 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = ../README.md \
+                         ../CHANGELOG.md \
                          ../LICENSE \
                          ../include \
                          ../test \
@@ -953,6 +954,7 @@ EXCLUDE_SYMBOLS        =
 # command).
 
 EXAMPLE_PATH           = ../LICENSE \
+                         ../CHANGELOG.md \
                          ../test/supervisor.cpp
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
