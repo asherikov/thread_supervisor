@@ -14,7 +14,9 @@
         </a>
     </td>
     <td align="center">
-        TODO
+        <a href="https://cloudsmith.io/~asherikov-aV7/repos/all/packages/detail/deb/thread-supervisor/latest/a=all;d=any-distro%252Fany-version;t=binary/">
+        <img src="https://api-prd.cloudsmith.io/v1/badges/version/asherikov-aV7/all/deb/thread-supervisor/latest/a=all;d=any-distro%252Fany-version;t=binary/?render=true&show_latest=true" alt="Latest version of 'thread-supervisor' @ Cloudsmith" />
+        </a>
     </td>
   </tr>
 </table>

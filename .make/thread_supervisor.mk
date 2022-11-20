@@ -13,9 +13,6 @@ clean: clean_common
 dox: doxclean clean
 	cd doc; doxygen
 
-deb-cloudsmith: deb
-	ls thread-supervisor-*-any.deb | xargs --no-run-if-empty -I {} cloudsmith push deb asherikov-aV7/thread_supervisor/any-distro/any-version {}
-
 format:
 	${FIND_SOURCES} | xargs ${CLANG_FORMAT} -verbose -i
 

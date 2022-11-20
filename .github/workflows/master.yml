@@ -39,6 +39,6 @@ jobs:
         steps:
             - uses: actions/checkout@v3
             - run: make deb_install_deps
-            - run: make deb
+            - run: make deb_any
             - run: sudo dpkg -i build/thread_supervisor-*-any.deb
 
