@@ -114,73 +114,74 @@ $(function() {
 <div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a32c57b11b4aa43a3d8b6a4c5156c72dd">   43</a></span>&#160;        std::atomic&lt;std::size_t&gt; <a class="code" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a32c57b11b4aa43a3d8b6a4c5156c72dd">counter_</a>;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a6369b529e7d8f5a12ba5ebe314280b78">   46</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a6369b529e7d8f5a12ba5ebe314280b78">stopSupervisedThreads</a>()<span class="keyword"> override</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            getThreadSupervisor().stop();</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a8824759cc4df99185cdbfe740ff78050">   51</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a8824759cc4df99185cdbfe740ff78050">threadFunction</a>()</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keywordflow">for</span> (;;)</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            {</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                <span class="keywordflow">if</span> (isThreadSupervisorInterrupted())</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                std::this_thread::sleep_for(std::chrono::seconds(1));</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a42d5d031706172475424569a8bdd79dc">   64</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a42d5d031706172475424569a8bdd79dc">threadCounter</a>()</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            ++counter_;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a5456850bd97996a83d9fe8349cc8f2b4">   69</a></span>&#160;        <a class="code" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a5456850bd97996a83d9fe8349cc8f2b4">TestThreadSupervisor</a>()</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        {</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            counter_ = 0;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        }</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a3464d1f0dd60b7cbba95c9783bbb00a9">   74</a></span>&#160;        <a class="code" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a3464d1f0dd60b7cbba95c9783bbb00a9">~TestThreadSupervisor</a>()</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        {</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            stopSupervisedThreads();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    };</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}  <span class="comment">// namespace</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="comment">// cppcheck-suppress virtualCallInConstructor</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a6369b529e7d8f5a12ba5ebe314280b78">   47</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a6369b529e7d8f5a12ba5ebe314280b78">stopSupervisedThreads</a>()<span class="keyword"> override</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">        </span>{</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            getThreadSupervisor().stop();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a8824759cc4df99185cdbfe740ff78050">   52</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a8824759cc4df99185cdbfe740ff78050">threadFunction</a>()</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="keywordflow">for</span> (;;)</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            {</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                <span class="keywordflow">if</span> (isThreadSupervisorInterrupted())</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                    <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                }</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                std::this_thread::sleep_for(std::chrono::seconds(1));</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        }</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a42d5d031706172475424569a8bdd79dc">   65</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a42d5d031706172475424569a8bdd79dc">threadCounter</a>()</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            ++counter_;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a5456850bd97996a83d9fe8349cc8f2b4">   70</a></span>&#160;        <a class="code" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a5456850bd97996a83d9fe8349cc8f2b4">TestThreadSupervisor</a>()</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        {</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            counter_ = 0;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a3464d1f0dd60b7cbba95c9783bbb00a9">   75</a></span>&#160;        <a class="code" href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a3464d1f0dd60b7cbba95c9783bbb00a9">~TestThreadSupervisor</a>()</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        {</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            stopSupervisedThreads();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    };</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}  <span class="comment">// namespace</span></div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="supervisor_8cpp.html#abd9355ce1dd3bdae467e9ed5d34882f7">   83</a></span>&#160;<a class="code" href="supervisor_8cpp.html#abd9355ce1dd3bdae467e9ed5d34882f7">BOOST_AUTO_TEST_CASE</a>(ThreadSupervisorStop)</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;{</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    TestThreadSupervisor pool;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    pool.addSupervisedThread(<a class="code" href="classtut_1_1thread_1_1Parameters.html">tut::thread::Parameters</a>(), &amp;TestThreadSupervisor::threadFunction, &amp;pool);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="supervisor_8cpp.html#abd9355ce1dd3bdae467e9ed5d34882f7">   84</a></span>&#160;<a class="code" href="supervisor_8cpp.html#abd9355ce1dd3bdae467e9ed5d34882f7">BOOST_AUTO_TEST_CASE</a>(ThreadSupervisorStop)</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;{</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    TestThreadSupervisor pool;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    pool.addSupervisedThread(<a class="code" href="classtut_1_1thread_1_1Parameters.html">tut::thread::Parameters</a>(), &amp;TestThreadSupervisor::threadFunction, &amp;pool);</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    pool.addSupervisedThread(<a class="code" href="classtut_1_1thread_1_1Parameters.html">tut::thread::Parameters</a>(), &amp;TestThreadSupervisor::threadFunction, &amp;pool);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    pool.addSupervisedThread(<a class="code" href="classtut_1_1thread_1_1Parameters.html">tut::thread::Parameters</a>(), &amp;TestThreadSupervisor::threadFunction, &amp;pool);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="supervisor_8cpp.html#ad8927204e6bb31f3565f1172f35eeee3">   92</a></span>&#160;<a class="code" href="supervisor_8cpp.html#abd9355ce1dd3bdae467e9ed5d34882f7">BOOST_AUTO_TEST_CASE</a>(ThreadSupervisorCount)</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;{</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    TestThreadSupervisor pool;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    BOOST_CHECK_EQUAL(pool.counter_, <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(0));</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    pool.addSupervisedThread(</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            <a class="code" href="classtut_1_1thread_1_1Parameters.html">tut::thread::Parameters</a>(</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                    <a class="code" href="classtut_1_1thread_1_1Parameters_1_1Restart.html">tut::thread::Parameters::Restart</a>(<span class="comment">/*attempts=*/</span>10, <span class="comment">/*sleep_ms=*/</span>5),</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                    <a class="code" href="classtut_1_1thread_1_1Parameters.html#aef7c0bc5f4475c062477c6a44472095aaa2e843feab94ef623fea888f07c28696">tut::thread::Parameters::TerminationPolicy::IGNORE</a>),</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            &amp;TestThreadSupervisor::threadCounter,</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            &amp;pool);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    std::this_thread::sleep_for(std::chrono::seconds(1));</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    BOOST_CHECK_EQUAL(pool.counter_, <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(10));</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    BOOST_CHECK(not pool.isThreadSupervisorInterrupted());</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;}</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="supervisor_8cpp.html#ad8927204e6bb31f3565f1172f35eeee3">   93</a></span>&#160;<a class="code" href="supervisor_8cpp.html#abd9355ce1dd3bdae467e9ed5d34882f7">BOOST_AUTO_TEST_CASE</a>(ThreadSupervisorCount)</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;{</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    TestThreadSupervisor pool;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    BOOST_CHECK_EQUAL(pool.counter_, <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(0));</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    pool.addSupervisedThread(</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <a class="code" href="classtut_1_1thread_1_1Parameters.html">tut::thread::Parameters</a>(</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                    <a class="code" href="classtut_1_1thread_1_1Parameters_1_1Restart.html">tut::thread::Parameters::Restart</a>(<span class="comment">/*attempts=*/</span>10, <span class="comment">/*sleep_ms=*/</span>5),</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                    <a class="code" href="classtut_1_1thread_1_1Parameters.html#aef7c0bc5f4475c062477c6a44472095aaa2e843feab94ef623fea888f07c28696">tut::thread::Parameters::TerminationPolicy::IGNORE</a>),</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            &amp;TestThreadSupervisor::threadCounter,</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            &amp;pool);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    std::this_thread::sleep_for(std::chrono::seconds(1));</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    BOOST_CHECK_EQUAL(pool.counter_, <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(10));</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    BOOST_CHECK(not pool.isThreadSupervisorInterrupted());</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor_html_a42d5d031706172475424569a8bdd79dc"><div class="ttname"><a href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a42d5d031706172475424569a8bdd79dc">anonymous_namespace{supervisor.cpp}::TestThreadSupervisor::threadCounter</a></div><div class="ttdeci">void threadCounter()</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00064">supervisor.cpp:64</a></div></div>
+<div class="ttc" id="aclassanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor_html_a42d5d031706172475424569a8bdd79dc"><div class="ttname"><a href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a42d5d031706172475424569a8bdd79dc">anonymous_namespace{supervisor.cpp}::TestThreadSupervisor::threadCounter</a></div><div class="ttdeci">void threadCounter()</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00065">supervisor.cpp:65</a></div></div>
 <div class="ttc" id="astructGlobalFixtureConfig_html_a7b4974e323248ac5879a67dffdd341aa"><div class="ttname"><a href="structGlobalFixtureConfig.html#a7b4974e323248ac5879a67dffdd341aa">GlobalFixtureConfig::GlobalFixtureConfig</a></div><div class="ttdeci">GlobalFixtureConfig()</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00019">supervisor.cpp:19</a></div></div>
-<div class="ttc" id="aclassanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor_html_a6369b529e7d8f5a12ba5ebe314280b78"><div class="ttname"><a href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a6369b529e7d8f5a12ba5ebe314280b78">anonymous_namespace{supervisor.cpp}::TestThreadSupervisor::stopSupervisedThreads</a></div><div class="ttdeci">void stopSupervisedThreads() override</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00046">supervisor.cpp:46</a></div></div>
+<div class="ttc" id="aclassanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor_html_a6369b529e7d8f5a12ba5ebe314280b78"><div class="ttname"><a href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a6369b529e7d8f5a12ba5ebe314280b78">anonymous_namespace{supervisor.cpp}::TestThreadSupervisor::stopSupervisedThreads</a></div><div class="ttdeci">void stopSupervisedThreads() override</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00047">supervisor.cpp:47</a></div></div>
 <div class="ttc" id="asupervisor_8h_html"><div class="ttname"><a href="supervisor_8h.html">supervisor.h</a></div></div>
 <div class="ttc" id="aclasstut_1_1thread_1_1Parameters_html_aef7c0bc5f4475c062477c6a44472095aaa2e843feab94ef623fea888f07c28696"><div class="ttname"><a href="classtut_1_1thread_1_1Parameters.html#aef7c0bc5f4475c062477c6a44472095aaa2e843feab94ef623fea888f07c28696">tut::thread::Parameters::TerminationPolicy::IGNORE</a></div><div class="ttdeci">@ IGNORE</div></div>
 <div class="ttc" id="aclasstut_1_1thread_1_1Parameters_1_1Restart_html"><div class="ttname"><a href="classtut_1_1thread_1_1Parameters_1_1Restart.html">tut::thread::Parameters::Restart</a></div><div class="ttdoc">Restarting parameters.</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8h_source.html#l00073">supervisor.h:73</a></div></div>
@@ -188,13 +189,13 @@ $(function() {
 <div class="ttc" id="astructGlobalFixtureConfig_html"><div class="ttname"><a href="structGlobalFixtureConfig.html">GlobalFixtureConfig</a></div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00017">supervisor.cpp:17</a></div></div>
 <div class="ttc" id="aclassanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor_html_a32c57b11b4aa43a3d8b6a4c5156c72dd"><div class="ttname"><a href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a32c57b11b4aa43a3d8b6a4c5156c72dd">anonymous_namespace{supervisor.cpp}::TestThreadSupervisor::counter_</a></div><div class="ttdeci">std::atomic&lt; std::size_t &gt; counter_</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00043">supervisor.cpp:43</a></div></div>
 <div class="ttc" id="aclassanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor_html"><div class="ttname"><a href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html">anonymous_namespace{supervisor.cpp}::TestThreadSupervisor</a></div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00040">supervisor.cpp:40</a></div></div>
-<div class="ttc" id="asupervisor_8cpp_html_abd9355ce1dd3bdae467e9ed5d34882f7"><div class="ttname"><a href="supervisor_8cpp.html#abd9355ce1dd3bdae467e9ed5d34882f7">BOOST_AUTO_TEST_CASE</a></div><div class="ttdeci">BOOST_AUTO_TEST_CASE(ThreadSupervisorStop)</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00083">supervisor.cpp:83</a></div></div>
+<div class="ttc" id="asupervisor_8cpp_html_abd9355ce1dd3bdae467e9ed5d34882f7"><div class="ttname"><a href="supervisor_8cpp.html#abd9355ce1dd3bdae467e9ed5d34882f7">BOOST_AUTO_TEST_CASE</a></div><div class="ttdeci">BOOST_AUTO_TEST_CASE(ThreadSupervisorStop)</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00084">supervisor.cpp:84</a></div></div>
 <div class="ttc" id="asupervisor_8cpp_html_ade2046aee63cc421c6e7546b382ca4ab"><div class="ttname"><a href="supervisor_8cpp.html#ade2046aee63cc421c6e7546b382ca4ab">BOOST_GLOBAL_FIXTURE</a></div><div class="ttdeci">BOOST_GLOBAL_FIXTURE(GlobalFixtureConfig)</div></div>
 <div class="ttc" id="aclasstut_1_1thread_1_1Parameters_html"><div class="ttname"><a href="classtut_1_1thread_1_1Parameters.html">tut::thread::Parameters</a></div><div class="ttdoc">Thread parameters.</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8h_source.html#l00054">supervisor.h:54</a></div></div>
-<div class="ttc" id="aclassanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor_html_a5456850bd97996a83d9fe8349cc8f2b4"><div class="ttname"><a href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a5456850bd97996a83d9fe8349cc8f2b4">anonymous_namespace{supervisor.cpp}::TestThreadSupervisor::TestThreadSupervisor</a></div><div class="ttdeci">TestThreadSupervisor()</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00069">supervisor.cpp:69</a></div></div>
+<div class="ttc" id="aclassanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor_html_a5456850bd97996a83d9fe8349cc8f2b4"><div class="ttname"><a href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a5456850bd97996a83d9fe8349cc8f2b4">anonymous_namespace{supervisor.cpp}::TestThreadSupervisor::TestThreadSupervisor</a></div><div class="ttdeci">TestThreadSupervisor()</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00070">supervisor.cpp:70</a></div></div>
 <div class="ttc" id="astructGlobalFixtureConfig_html_a3ac1741a294c922d896bdeb2d59f87f9"><div class="ttname"><a href="structGlobalFixtureConfig.html#a3ac1741a294c922d896bdeb2d59f87f9">GlobalFixtureConfig::~GlobalFixtureConfig</a></div><div class="ttdeci">~GlobalFixtureConfig()=default</div></div>
-<div class="ttc" id="aclassanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor_html_a3464d1f0dd60b7cbba95c9783bbb00a9"><div class="ttname"><a href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a3464d1f0dd60b7cbba95c9783bbb00a9">anonymous_namespace{supervisor.cpp}::TestThreadSupervisor::~TestThreadSupervisor</a></div><div class="ttdeci">~TestThreadSupervisor()</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00074">supervisor.cpp:74</a></div></div>
-<div class="ttc" id="aclassanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor_html_a8824759cc4df99185cdbfe740ff78050"><div class="ttname"><a href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a8824759cc4df99185cdbfe740ff78050">anonymous_namespace{supervisor.cpp}::TestThreadSupervisor::threadFunction</a></div><div class="ttdeci">void threadFunction()</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00051">supervisor.cpp:51</a></div></div>
+<div class="ttc" id="aclassanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor_html_a3464d1f0dd60b7cbba95c9783bbb00a9"><div class="ttname"><a href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a3464d1f0dd60b7cbba95c9783bbb00a9">anonymous_namespace{supervisor.cpp}::TestThreadSupervisor::~TestThreadSupervisor</a></div><div class="ttdeci">~TestThreadSupervisor()</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00075">supervisor.cpp:75</a></div></div>
+<div class="ttc" id="aclassanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor_html_a8824759cc4df99185cdbfe740ff78050"><div class="ttname"><a href="classanonymous__namespace_02supervisor_8cpp_03_1_1TestThreadSupervisor.html#a8824759cc4df99185cdbfe740ff78050">anonymous_namespace{supervisor.cpp}::TestThreadSupervisor::threadFunction</a></div><div class="ttdeci">void threadFunction()</div><div class="ttdef"><b>Definition:</b> <a href="supervisor_8cpp_source.html#l00052">supervisor.cpp:52</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['globalfixtureconfig_78',['GlobalFixtureConfig',['../structGlobalFixtureConfig.html',1,'']]]
+  ['globalfixtureconfig_80',['GlobalFixtureConfig',['../structGlobalFixtureConfig.html',1,'']]]
 ];
