@@ -43,6 +43,7 @@ namespace
         std::atomic<std::size_t> counter_;
 
     public:
+        // cppcheck-suppress virtualCallInConstructor
         void stopSupervisedThreads() override
         {
             getThreadSupervisor().stop();

@@ -1,6 +1,7 @@
 NATURAL:
 alexander
 apache
+cppcheck
 joinable
 killall
 noexcept
