@@ -22,12 +22,12 @@
 </table>
 
 
-Simple C++11 thread supervisor which automatically restarts failed or finished threads.
+Simple C++17 thread supervisor which automatically restarts failed or finished threads.
 
 Doxygen documentation: https://asherikov.github.io/thread_supervisor/doxygen
 
 Dependencies:
-- C++11 compatible compiler
+- C++17 compatible compiler
 - POSIX threads (pthreads)
 - Boost.UTF for tests
 
