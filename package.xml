@@ -6,8 +6,9 @@
     <maintainer email="alexander@sherikov.net">Alexander Sherikov</maintainer>
     <author email="alexander@sherikov.net">Alexander Sherikov</author>
     <license>Apache 2.0</license>
-    <buildtool_depend>catkin</buildtool_depend>
     <export>
         <build_type>cmake</build_type>
     </export>
+
+    <test_depend>boost</test_depend>
 </package>

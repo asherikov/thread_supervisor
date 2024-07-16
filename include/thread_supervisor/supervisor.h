@@ -37,6 +37,7 @@ namespace tut
             void log(const t_Arg &arg, t_Args &&...args) const
             {
                 std::cerr << arg;
+                // cppcheck-suppress ignoredReturnValue
                 log(std::forward<t_Args>(args)...);
             }
 
@@ -77,23 +78,23 @@ namespace tut
                 std::size_t sleep_ms_;  /// delay between attempts
 
             public:
-                explicit Restart(const std::size_t attempts = 0, const std::size_t sleep_ms = 0)
+                explicit Restart(const std::size_t attempts = 0, const std::size_t sleep_ms = 0)  // NOLINT
                 {
                     attempts_ = attempts;
                     sleep_ms_ = sleep_ms;
                 }
 
-                bool isUnlimited() const
+                [[nodiscard]] bool isUnlimited() const
                 {
                     return (0 == attempts_);
                 }
 
-                bool isOk(const std::size_t attempt) const
+                [[nodiscard]] bool isOk(const std::size_t attempt) const
                 {
                     return (isUnlimited() or attempt < attempts_);
                 }
 
-                bool isEnabled() const
+                [[nodiscard]] bool isEnabled() const
                 {
                     return (isOk(1));
                 }
@@ -115,8 +116,8 @@ namespace tut
 
             public:
                 explicit Scheduling(
-                        const int priority = 0,
-                        const int policy = SCHED_FIFO,
+                        const int priority = 0,         // NOLINT
+                        const int policy = SCHED_FIFO,  // NOLINT
                         const bool ignore_failures = true)
                 {
                     priority_ = priority;
@@ -125,7 +126,7 @@ namespace tut
                 }
 
 
-                bool apply(const std::thread::native_handle_type &&handle) const
+                bool apply(const std::thread::native_handle_type &&handle) const  // NOLINT return value can be ignored
                 {
                     if (SCHED_FIFO != policy_ or 0 != priority_)  // custom parameters
                     {
@@ -157,34 +158,34 @@ namespace tut
 
         public:
             template <class... t_Args>
-            Parameters(const Restart &&restart, t_Args &&...args) : Parameters(std::forward<t_Args>(args)...)
+            Parameters(const Restart &&restart, t_Args &&...args)  // NOLINT noexplicit
+              : Parameters(std::forward<t_Args>(args)...)
             {
                 restart_ = restart;
             }
 
             template <class... t_Args>
-            Parameters(const Scheduling &&scheduling, t_Args &&...args) : Parameters(std::forward<t_Args>(args)...)
+            Parameters(const Scheduling &&scheduling, t_Args &&...args)  // NOLINT noexplicit
+              : Parameters(std::forward<t_Args>(args)...)
             {
                 scheduling_ = scheduling;
             }
 
             template <class... t_Args>
-            Parameters(const TerminationPolicy termination_policy, t_Args &&...args)
+            Parameters(const TerminationPolicy termination_policy, t_Args &&...args)  // NOLINT noexplicit
               : Parameters(std::forward<t_Args>(args)...)
             {
                 termination_policy_ = termination_policy;
             }
 
             template <class... t_Args>
-            Parameters(const ExceptionPolicy exception_policy, t_Args &&...args)
+            Parameters(const ExceptionPolicy exception_policy, t_Args &&...args)  // NOLINT noexplicit
               : Parameters(std::forward<t_Args>(args)...)
             {
                 exception_policy_ = exception_policy;
             }
 
-            Parameters()
-            {
-            }
+            Parameters() = default;
         };
 
 
@@ -250,14 +251,12 @@ namespace tut
                         {
                             break;
                         }
-                        else
-                        {
-                            supervisor->log(
-                                    "Supervisor / restarting thread: ",
-                                    attempt + 1,
-                                    " / ",
-                                    parameters_.restart_.isUnlimited() ? 0 : parameters_.restart_.attempts_);
-                        }
+
+                        supervisor->log(
+                                "Supervisor / restarting thread: ",
+                                attempt + 1,
+                                " / ",
+                                parameters_.restart_.isUnlimited() ? 0 : parameters_.restart_.attempts_);
                     }
                     else
                     {
@@ -357,17 +356,17 @@ namespace tut
             {
                 const std::size_t sleep_ms = 10;
 
-                std::size_t counter = 0;
                 {
-                    std::lock_guard<std::mutex> lock(threads_mutex_);
+                    const std::lock_guard<std::mutex> lock(threads_mutex_);
+                    std::size_t counter = 0;
                     for (;;)
                     {
                         if (counter * sleep_ms < wait_ms)
                         {
                             {
-                                std::lock_guard<std::mutex> terminated_lock(terminated_threads_mutex_);
+                                const std::lock_guard<std::mutex> terminated_lock(terminated_threads_mutex_);
 
-                                for (Thread::Reference &thread_ref : terminated_threads_)
+                                for (const Thread::Reference &thread_ref : terminated_threads_)
                                 {
                                     thread_ref->join();
                                     threads_.erase(thread_ref);
@@ -387,6 +386,7 @@ namespace tut
                         }
                         else
                         {
+                            // cppcheck-suppress ignoredReturnValue
                             log("Threads did not terminate in the given time after request.");
                             return (false);
                         }
@@ -397,14 +397,14 @@ namespace tut
 
             bool empty()
             {
-                std::lock_guard<std::mutex> lock(threads_mutex_);
+                const std::lock_guard<std::mutex> lock(threads_mutex_);
                 return (threads_.empty());
             }
 
 
             void drop(const std::list<Thread>::iterator &item)
             {
-                std::lock_guard<std::mutex> lock(terminated_threads_mutex_);
+                const std::lock_guard<std::mutex> lock(terminated_threads_mutex_);
                 terminated_threads_.push_back(item);
             }
 
@@ -421,12 +421,13 @@ namespace tut
 
             ~Supervisor()
             {
-                if (false == isInterrupted())
+                if (not isInterrupted())
                 {
                     // - throwing in destructor -> terminate(), unless noexcept(false) is set.
                     // - noexcept(false) however interferes with other stuff in derived classes.
                     // - this check is intended to detect API misuse and should not fail under
                     // normal conditions.
+                    // cppcheck-suppress ignoredReturnValue
                     log("Destructor of Supervisor is reached with 'interrupted_ = false',"
                         "which means that terminate() method was not called.");
                     std::terminate();
@@ -434,6 +435,7 @@ namespace tut
 
                 if (not empty())
                 {
+                    // cppcheck-suppress ignoredReturnValue
                     log("Destructor of Supervisor is reached with some threads still running.");
                     std::terminate();
                 }
@@ -448,7 +450,7 @@ namespace tut
 
 
             /// Check if interrupted, child threads should stop when true (pass supervisor as a parameter).
-            bool isInterrupted() const
+            [[nodiscard]] bool isInterrupted() const
             {
                 return (interrupted_);
             }
@@ -468,12 +470,13 @@ namespace tut
             {
                 if (isInterrupted())
                 {
+                    // cppcheck-suppress ignoredReturnValue
                     log("Addition of a thread attempted after interrupt.");
                     std::terminate();
                 }
                 else
                 {
-                    std::lock_guard<std::mutex> lock(threads_mutex_);
+                    const std::lock_guard<std::mutex> lock(threads_mutex_);
                     threads_.emplace_back();
                     threads_.back().start(this, --threads_.end(), std::forward<t_Args>(args)...);
                 }
@@ -489,9 +492,11 @@ namespace tut
         protected:
             Supervisor<t_Logger> thread_supervisor_;
 
+        protected:
+            ~InheritableSupervisor() = default;
 
         public:
-            const Supervisor<t_Logger> &getThreadSupervisor() const
+            [[nodiscard]] const Supervisor<t_Logger> &getThreadSupervisor() const
             {
                 return (thread_supervisor_);
             }
@@ -521,7 +526,7 @@ namespace tut
 
 
             /// Should be checked by threaded class methods
-            bool isThreadSupervisorInterrupted() const
+            [[nodiscard]] bool isThreadSupervisorInterrupted() const
             {
                 return (getThreadSupervisor().isInterrupted());
             }

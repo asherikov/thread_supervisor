@@ -9,7 +9,7 @@ jobs:
         runs-on: ubuntu-20.04
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
             - run: make install_ubuntu_test_deps
             - run: make test
 
@@ -17,19 +17,9 @@ jobs:
         runs-on: ubuntu-22.04
 
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
             - run: make install_ubuntu_test_deps
             - run: make test
-
-    jammy_scanbuild:
-        runs-on: ubuntu-22.04
-
-        steps:
-            - uses: actions/checkout@v3
-            - run: sudo apt update
-            - run: make install_ubuntu_test_deps
-            - run: $APT_INSTALL clang-tidy-13
-            - run: make clangcheck SCANBUILD=scan-build-13
 
     deb:
         runs-on: ubuntu-20.04
@@ -37,8 +27,28 @@ jobs:
             run:
                 shell: bash
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
             - run: make deb_install_deps
             - run: make deb_any
             - run: sudo dpkg -i build/thread_supervisor-*-any.deb
 
+    ccws:
+        runs-on: ubuntu-22.04
+
+        steps:
+            - name: ccws
+              uses: actions/checkout@v4
+              with:
+                repository: "asherikov/ccws"
+                path: "ccws"
+            - run: mkdir -p ccws/src/.ccws
+            - name: main
+              uses: actions/checkout@v4
+              with:
+                path: "ccws/src/thread_supervisor"
+            - run: echo 'set(thread_supervisor_TESTS "ON" CACHE STRING "" FORCE)' > "ccws/src/.ccws/toolchain.cmake"
+            - run: cd ccws; make bp_install_build BUILD_PROFILE=static_checks
+            - run: cd ccws; make bp_install_build BUILD_PROFILE=scan_build
+            - run: cd ccws; make BUILD_PROFILE=static_checks
+            - run: cd ccws; make dep_install PKG=thread_supervisor
+            - run: cd ccws; make thread_supervisor BUILD_PROFILE=scan_build

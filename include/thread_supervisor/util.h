@@ -11,7 +11,7 @@
 /// Class definitions that prevent copying
 #define THREAD_SUPERVISOR_DISABLE_CLASS_COPY(Class)                                                                    \
 public:                                                                                                                \
-    Class(const Class &) = delete;                                                                                     \
-    Class &operator=(const Class &) = delete;                                                                          \
-    Class(Class &&) = delete;                                                                                          \
-    Class &operator=(Class &&) = delete;
+    Class(const Class &) = delete;            /* NOLINT */                                                             \
+    Class &operator=(const Class &) = delete; /* NOLINT */                                                             \
+    Class(Class &&) = delete;                 /* NOLINT */                                                             \
+    Class &operator=(Class &&) = delete;      /* NOLINT */

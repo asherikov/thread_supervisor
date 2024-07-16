@@ -4,7 +4,10 @@ apache
 cppcheck
 joinable
 killall
+nodiscard
 noexcept
+noexplicit
+nolint
 pthread
 setschedparam
 sherikov

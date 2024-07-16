@@ -72,7 +72,7 @@ namespace
             counter_ = 0;
         }
 
-        ~TestThreadSupervisor()
+        virtual ~TestThreadSupervisor()
         {
             stopSupervisedThreads();
         }

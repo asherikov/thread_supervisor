@@ -6,8 +6,8 @@ APT_INSTALL=sudo apt install -y --no-install-recommends
 PIP_INSTALL=sudo python3 -m pip install
 GEM_INSTALL=sudo gem install
 
-CLANG_FORMAT?=clang-format13
-SCANBUILD?=scan-build-13
+CLANG_FORMAT?=clang-format15
+SCANBUILD?=scan-build-15
 
 
 help:
@@ -34,8 +34,8 @@ update_version_cmake:
 
 cppcheck:
 	# --inconclusive
+	find ./ -type f -iname '*.hpp' -or -iname "*.cpp" -or -iname "*.h" | xargs --max-procs=1 --no-run-if-empty -I {} \
 	cppcheck \
-	    ./ \
 	    --relative-paths \
 	    --quiet --verbose --force \
 	    --template='[{file}:{line}]  {severity}  {id}  {message}' \
@@ -51,6 +51,7 @@ cppcheck:
 	    --suppress=constStatement \
 	    --inline-suppr \
 	    -i ${BUILD_ROOT} \
+	    {} \
 	3>&1 1>&2 2>&3 | tee cppcheck.err
 	test 0 -eq `cat cppcheck.err | wc -l && rm cppcheck.err`
 
