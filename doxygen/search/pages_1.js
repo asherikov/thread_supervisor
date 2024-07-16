@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['changelog_167',['CHANGELOG',['../md_CHANGELOG.html',1,'(Global Namespace)'],['../CHANGELOG.html',1,'(Global Namespace)']]]
+  ['changelog_172',['Changelog',['../CHANGELOG.html',1,'']]],
+  ['changelog_173',['CHANGELOG',['../md_CHANGELOG.html',1,'']]]
 ];

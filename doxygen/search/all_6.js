@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['ignore_21',['IGNORE',['../classtut_1_1thread_1_1Parameters.html#aef7c0bc5f4475c062477c6a44472095aaa2e843feab94ef623fea888f07c28696',1,'tut::thread::Parameters']]],
-  ['ignore_5ffailures_5f_22',['ignore_failures_',['../classtut_1_1thread_1_1Parameters_1_1Scheduling.html#ac8728d0494d9e4d4a528641bb1a28e5b',1,'tut::thread::Parameters::Scheduling']]],
-  ['inheritablesupervisor_23',['InheritableSupervisor',['../classtut_1_1thread_1_1InheritableSupervisor.html',1,'tut::thread']]],
-  ['inheritablesupervisor_3c_3e_24',['InheritableSupervisor&lt;&gt;',['../classtut_1_1thread_1_1InheritableSupervisor.html',1,'tut::thread']]],
+  ['ignore_22',['IGNORE',['../classtut_1_1thread_1_1Parameters.html#aef7c0bc5f4475c062477c6a44472095aaa2e843feab94ef623fea888f07c28696',1,'tut::thread::Parameters']]],
+  ['ignore_5ffailures_5f_23',['ignore_failures_',['../classtut_1_1thread_1_1Parameters_1_1Scheduling.html#ac8728d0494d9e4d4a528641bb1a28e5b',1,'tut::thread::Parameters::Scheduling']]],
+  ['inheritablesupervisor_24',['InheritableSupervisor',['../classtut_1_1thread_1_1InheritableSupervisor.html',1,'tut::thread']]],
   ['interrupt_25',['interrupt',['../classtut_1_1thread_1_1Supervisor.html#a62395e3df6f79a3a4e9889a125e65f8f',1,'tut::thread::Supervisor']]],
   ['isenabled_26',['isEnabled',['../classtut_1_1thread_1_1Parameters_1_1Restart.html#ab6aa21b7c77184c06a5cd064425d32a3',1,'tut::thread::Parameters::Restart']]],
   ['isinterrupted_27',['isInterrupted',['../classtut_1_1thread_1_1Supervisor.html#a3e61eef53dd8da2624a32c5008706677',1,'tut::thread::Supervisor']]],
