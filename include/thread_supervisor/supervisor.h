@@ -271,15 +271,6 @@ namespace tut
             template <class t_Logger, class t_Function, class... t_Args>
             void startThread(Supervisor<t_Logger> *supervisor, t_Function &&function, t_Args &&...args)
             {
-                if (not parameters_.scheduling_.apply(thread_.native_handle()))
-                {
-                    supervisor->log("Supervisor error: could not configure custom thread scheduling.");
-                    if (not parameters_.scheduling_.ignore_failures_)
-                    {
-                        std::terminate();
-                    }
-                }
-
                 if (parameters_.restart_.isEnabled())
                 {
                     startLoop(supervisor, function, std::forward<t_Args>(args)...);
@@ -320,6 +311,15 @@ namespace tut
                 parameters_ = parameters;
                 thread_ = std::thread(
                         &Thread::startThread<t_Logger, t_Args...>, this, supervisor, std::forward<t_Args>(args)...);
+
+                if (not parameters_.scheduling_.apply(thread_.native_handle()))
+                {
+                    supervisor->log("Supervisor error: could not configure custom thread scheduling.");
+                    if (not parameters_.scheduling_.ignore_failures_)
+                    {
+                        std::terminate();
+                    }
+                }
             }
 
             void join()
