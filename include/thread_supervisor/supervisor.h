@@ -340,9 +340,17 @@ namespace tut
             friend class Thread;
             THREAD_SUPERVISOR_DISABLE_CLASS_COPY(Supervisor)
 
+        protected:
+            enum class Status
+            {
+                UNDEFINED = 0,
+                ACTIVE = 1,
+                INTERRUPTED = 2
+            };
+
 
         protected:
-            std::atomic<bool> interrupted_;
+            std::atomic<Status> status_;
 
             std::mutex threads_mutex_;
             Thread::List threads_;
@@ -415,21 +423,21 @@ namespace tut
 
             Supervisor()
             {
-                interrupted_ = false;
+                status_ = Status::UNDEFINED;
             }
 
 
             ~Supervisor()
             {
-                if (not isInterrupted())
+                if (Status::ACTIVE == status_)
                 {
                     // - throwing in destructor -> terminate(), unless noexcept(false) is set.
                     // - noexcept(false) however interferes with other stuff in derived classes.
                     // - this check is intended to detect API misuse and should not fail under
                     // normal conditions.
                     // cppcheck-suppress ignoredReturnValue
-                    log("Destructor of Supervisor is reached with 'interrupted_ = false',"
-                        "which means that terminate() method was not called.");
+                    log("Destructor of Supervisor is reached with active status,"
+                        "which means that interrupt() method has not been called.");
                     std::terminate();
                 }
 
@@ -445,14 +453,14 @@ namespace tut
             /// Interrupt execution, see @ref isInterrupted
             void interrupt()
             {
-                interrupted_ = true;
+                status_ = Status::INTERRUPTED;
             }
 
 
             /// Check if interrupted, child threads should stop when true (pass supervisor as a parameter).
             [[nodiscard]] bool isInterrupted() const
             {
-                return (interrupted_);
+                return (Status::INTERRUPTED == status_);
             }
 
 
@@ -476,6 +484,7 @@ namespace tut
                 }
                 else
                 {
+                    status_ = Status::ACTIVE;
                     const std::lock_guard<std::mutex> lock(threads_mutex_);
                     threads_.emplace_back();
                     threads_.back().start(this, --threads_.end(), std::forward<t_Args>(args)...);
