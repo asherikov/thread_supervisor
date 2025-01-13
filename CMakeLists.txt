@@ -1,6 +1,6 @@
 # General parameters
 cmake_minimum_required (VERSION 3.10.0)
-project(thread_supervisor VERSION 1.2.2 LANGUAGES CXX)
+project(thread_supervisor VERSION 1.2.3 LANGUAGES CXX)
 
 
 # ---
