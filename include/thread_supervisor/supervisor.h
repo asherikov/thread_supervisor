@@ -41,7 +41,7 @@ namespace tut
                 log(std::forward<t_Args>(args)...);
             }
 
-            void log() const
+            static void log()
             {
                 std::cerr << std::endl;
             }
