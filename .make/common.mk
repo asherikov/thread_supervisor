@@ -2,7 +2,7 @@ ROOT_DIR=../../
 BUILD_ROOT?=./build
 BUILD_DIR?=${BUILD_ROOT}/${OPTIONS}
 
-APT_INSTALL=sudo apt install -y --no-install-recommends
+APT_INSTALL=sudo env DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends
 PIP_INSTALL=sudo python3 -m pip install
 GEM_INSTALL=sudo gem install
 
@@ -17,7 +17,7 @@ help:
 
 
 install_deps_common:
-	${APT_INSTALL} cmake
+	${APT_INSTALL} cmake python3-pip
 	${APT_INSTALL} cppcheck
 	${PIP_INSTALL} scspell3k
 
